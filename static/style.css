@@ -1,4 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
 
 body {
+    background-color: #242424;
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+}
+
+.containerGeral {
+    border: 1px solid #FFF;
+    background: #242424;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    align-items: center;
+}
+
+h1 {
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 48px;
+    font-weight: 400;
+    line-height: normal;
     text-align: center;
+}
+
+#generateToken {
+    border-radius: 18px;
+    background: #386D59;
+    width: 399px;
+    height: 87px;
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 48px;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.slider-input {
+    width: 300px;
+}
+
+.checkbox {
+    border: 1px solid #1F352A;
+    background: #1C1C1C;
+}
+
+/* Styles for the card-body */
+
+.card {
+    background-color: rgb(32, 32, 32);
+    color: #FFF;
+    width: 1114px;
+}
+
+.small-input input {
+    width: 150px;
+}
+
+/* Customize checkbox */
+.form-check-input:checked {
+    background-color: #1C1C1C;
+    border: 1px solid #1F352A;
+}
+
+/* Add a green border to the text input when it gains focus */
+.form-control:focus {
+    border-color: #1F352A;
+}
+
+/* Customize text input */
+#customSalt {
+    background-color: #1C1C1C;
+    border: 1px solid #1F352A;
+    color: #FFF;
+}
+
+#customRange1::-webkit-slider-thumb {
+    background-color: #386D59;
+}
+
+.small-input input {
+    width: 300px;
+}
+
+/* Remove the blue border from the button when it gains focus */
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Styles for the results containers */
+.result-container {
+    overflow-y: auto;
+    max-height: 200px;
+    padding: 10px;
+    background-color: rgb(32, 32, 32);
+}
+
+.result-content {
+    color: #36916e;
+}
+
+.copy-button {
+    float: right;
+    margin-top: -30px;
 }
