@@ -1,50 +1,83 @@
+/**
+ * The code snippet is an event listener that handles the behavior of a checkbox, input fields, and a button on a web page.
+ * It updates the visibility of a "Custom Salt" field and label based on the state of a checkbox.
+ * It also sends settings to the backend and updates the results on the page when a button is clicked.
+ * Additionally, it detects changes in a slider and updates the character count text accordingly.
+ *
+ * Example Usage:
+ * ```javascript
+ * // HTML
+ * <input type="checkbox" id="useGenericSalt">
+ * <input type="text" id="customSalt">
+ * <input type="range" id="customRange1">
+ * <label for="customSalt">Custom Salt</label>
+ * <button id="generateToken">Generate Token</button>
+ * <p id="tokenResult"></p>
+ * <p id="usedSaltResult"></p>
+ * <p id="encryptedTokenResult"></p>
+ * <p id="charCount"></p>
+ *
+ * // JavaScript
+ * document.addEventListener('DOMContentLoaded', function () {
+ *     // Code snippet
+ * });
+ * ```
+ *
+ * @summary Handles the behavior of a checkbox, input fields, and a button on a web page.
+ * @function
+ */
 document.addEventListener('DOMContentLoaded', function () {
-    var usarSaltGenericoCheckbox = document.getElementById('usarSaltGenerico');
-    var saltPersonalizadoInput = document.getElementById('saltPersonalizado');
-    var quantidadeCaracteresInput = document.getElementById('quantidadeCaracteres');
-    var saltPersonalizadoLabel = document.querySelector('label[for="saltPersonalizado"]'); // Selecionar o rótulo do campo SALT Personalizado
+    var useGenericSaltCheckbox = document.getElementById('useGenericSalt');
+    var customSaltInput = document.getElementById('customSalt');
+    var characterCountInput = document.getElementById('customRange1');
+    var customSaltLabel = document.querySelector('label[for="customSalt"]'); // Select the label for Custom Salt field
 
-    // Função para atualizar a visibilidade do campo "SALT Personalizado" e o rótulo
-    function updateSaltPersonalizadoInput() {
-        if (usarSaltGenericoCheckbox.checked) {
-            saltPersonalizadoInput.style.display = 'none';
-            saltPersonalizadoInput.value = ''; // Limpar o campo
-            saltPersonalizadoLabel.style.display = 'none'; // Ocultar o rótulo
+    // Function to update the visibility of the "Custom Salt" field and label
+    function updateCustomSaltInput() {
+        if (useGenericSaltCheckbox.checked) {
+            customSaltInput.style.display = 'none';
+            customSaltInput.value = ''; // Clear the field
+            customSaltLabel.style.display = 'none'; // Hide the label
         } else {
-            saltPersonalizadoInput.style.display = 'block';
-            saltPersonalizadoLabel.style.display = 'block'; // Exibir o rótulo
+            customSaltInput.style.display = 'block';
+            customSaltLabel.style.display = 'block'; // Show the label
         }
     }
 
-    // Chame a função quando a página carregar e quando a caixa de seleção mudar
-    updateSaltPersonalizadoInput();
-    usarSaltGenericoCheckbox.addEventListener('change', updateSaltPersonalizadoInput);
+    // Call the function when the page loads and when the checkbox changes
+    updateCustomSaltInput();
+    useGenericSaltCheckbox.addEventListener('change', updateCustomSaltInput);
 
-    document.getElementById('gerarToken').addEventListener('click', function () {
-        var quantidadeCaracteres = quantidadeCaracteresInput.value;
-        var usarSaltGenerico = usarSaltGenericoCheckbox.checked;
-        var saltPersonalizado = saltPersonalizadoInput.value;
+    document.getElementById('generateToken').addEventListener('click', function () {
+        var characterCount = characterCountInput.value;
+        var useGenericSalt = useGenericSaltCheckbox.checked;
+        var customSalt = customSaltInput.value;
 
-        // Enviar configurações para o backend
+        // Send settings to the backend
         axios.post('/generate_token', {
-            quantidadeCaracteres: quantidadeCaracteres,
-            usarSaltGenerico: usarSaltGenerico,
-            saltPersonalizado: saltPersonalizado
+            characterCount: characterCount,
+            useGenericSalt: useGenericSalt,
+            customSalt: customSalt
         })
-        .then(function (response) {
-            // Atualizar os resultados na página
-            document.getElementById('resultadoToken').textContent = response.data.token;
-            document.getElementById('resultadoSalt').textContent = response.data.salt;
-            // Simples exemplo de criptografia, substitua por sua implementação real
-            var tokenCriptografado = btoa(response.data.token + response.data.salt);
-            document.getElementById('resultadoCriptografado').textContent = tokenCriptografado;
-        })
-        .catch(function (error) {
-            console.error(error);
-        });
+            .then(function (response) {
+                // Update the results on the page
+                document.getElementById('tokenResult').textContent = response.data.token;
+                document.getElementById('usedSaltResult').textContent = response.data.salt;
+                // Simple example of encryption, replace with your real implementation
+                document.getElementById('encryptedTokenResult').textContent = response.data.sha;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
     });
 
-    // function mostrarValor(valor) {
-    //     document.getElementById('demo').textContent = valor;
-    // }
+    const slider = document.getElementById("customRange1");
+    const charCount = document.getElementById("charCount");
+
+    // Add an event listener to detect changes in the slider
+    slider.addEventListener("input", () => {
+        // Update the character count text with the current slider value
+        charCount.textContent = slider.value;
+    });
+
 });
